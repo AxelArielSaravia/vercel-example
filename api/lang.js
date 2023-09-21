@@ -1,6 +1,7 @@
 export const config = {
     runtime: "edge",
 };
+
 export default function handler(req, res) {
     const { language } = req.query;
     // Personalization logic based on user preferences

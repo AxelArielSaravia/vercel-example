@@ -1,8 +1,8 @@
-var config = {
+export const config = {
     runtime: "edge",
 };
 
-async function handler(req) {
+export default async function handler(req) {
     var PATH = "/trending/all/day?language=enUs";
     var SEARCH = "lenguage=enUs";
     var url = new URL(req.url);
@@ -33,8 +33,3 @@ async function handler(req) {
     });
 
 }
-
-export default handler;
-export {
-    config
-};
