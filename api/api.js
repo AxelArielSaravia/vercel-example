@@ -21,7 +21,7 @@ const badResponse = new Response("Bad request", {status: 404});
 
 function fetchReturn(data) {
     if (data.ok) {
-        return new Response(data.json(), {status: 200});
+        return new Response(data.body, {status: 200});
     } else {
         return badResponse;
     }
