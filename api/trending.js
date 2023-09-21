@@ -6,38 +6,35 @@ const config = {
     runtime: "edge"
 };
 
-function fetchReturn(data) {
-    if (data.ok) {
-        return new Response(data.body, {
-            status: 200,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
-    } else {
-        return new Response("Bad request", {status: 404});
-    }
-}
-
-function handler(req) {
-    const PATH = "/trending/all/day?language=enUs";
-    const SEARCH="lenguage=enUs";
-
+async function handler(req) {
+    var PATH = "/trending/all/day?language=enUs";
+    var SEARCH = "lenguage=enUs";
     var url = new URL(req.url);
-    var path = `${process.env.API_URL}${PATH}`;
-    var search = url.search;
-    if (search.length === 0) {
-        path = `${path}?${SEARCH}`;
+
+    var p = `${process.env.API_URL}${PATH}`;
+    var s = url.search;
+    if (s.length === 0) {
+        p = `${p}?${SEARCH}`;
     } else {
-        path = `${path}${search}&${SEARCH}`;
+        p = `${p}${s}&${SEARCH}`;
     }
-    return fetch(path, {
+    const r = await fetch(p, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.API_KEY}`
         }
-    }).then(fetchReturn);
+    });
+    if (!r.ok) {
+        return new Response("Bad request", {status: 404});
+    }
+    return new Response(r.body, {
+        status: 200,
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+
 }
 
 export default handler;
