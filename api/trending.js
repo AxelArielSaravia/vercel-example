@@ -6,19 +6,6 @@ const config = {
     runtime: "edge"
 };
 
-const OPTIONS = {
-    method: 'GET',
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.API_KEY}`
-    }
-};
-
-const PATH = "/trending/all/day?language=enUs";
-const SEARCH="lenguage=enUs";
-
-const badResponse = new Response("Bad request", {status: 404});
-
 function fetchReturn(data) {
     if (data.ok) {
         return new Response(data.body, {
@@ -28,14 +15,15 @@ function fetchReturn(data) {
             }
         });
     } else {
-        return badResponse;
+        return new Response("Bad request", {status: 404});
     }
 }
 
-const url = new URL("a:0.a");
-
 function handler(req) {
-    url.href = req.url;
+    const PATH = "/trending/all/day?language=enUs";
+    const SEARCH="lenguage=enUs";
+
+    var url = new URL(req.url);
     var path = `${process.env.API_URL}${PATH}`;
     var search = url.search;
     if (search.length === 0) {
@@ -43,7 +31,13 @@ function handler(req) {
     } else {
         path = `${path}${search}&${SEARCH}`;
     }
-    return fetch(path, OPTIONS).then(fetchReturn);
+    return fetch(path, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.API_KEY}`
+        }
+    }).then(fetchReturn);
 }
 
 export default handler;
