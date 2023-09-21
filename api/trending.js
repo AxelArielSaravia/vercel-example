@@ -1,7 +1,3 @@
-if (!process.env.API_KEY || !process.env.API_URL) {
-    throw Error("Missing env variables");
-}
-
 const config = {
     runtime: "edge"
 };
@@ -25,6 +21,7 @@ async function handler(req) {
             Authorization: `Bearer ${process.env.API_KEY}`
         }
     });
+    console.log(r);
     if (!r.ok) {
         return new Response("Bad request", {status: 404});
     }
