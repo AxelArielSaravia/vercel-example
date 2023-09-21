@@ -3,13 +3,13 @@ if (!process.env.API_KEY || !process.env.API_URL) {
 }
 
 const config = {
-    runtime: "experimental-edge"
+    runtime: "edge"
 };
 
 const OPTIONS = {
     method: 'GET',
     headers: {
-        "Content-Type": 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.API_KEY}`
     }
 };
@@ -21,7 +21,12 @@ const badResponse = new Response("Bad request", {status: 404});
 
 function fetchReturn(data) {
     if (data.ok) {
-        return new Response(data.body, {status: 200});
+        return new Response(data.body, {
+            status: 200,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
     } else {
         return badResponse;
     }
