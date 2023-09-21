@@ -1,5 +1,5 @@
-const config = {
-    runtime: "edge"
+var config = {
+    runtime: "edge",
 };
 
 async function handler(req) {
