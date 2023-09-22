@@ -1,3 +1,9 @@
+import _utils from "./_utils.js";
+
+if (!process.env.API_KEY || !process.env.API_URL) {
+    throw Error("Missing env variables");
+}
+
 export const config = {
     runtime: "edge",
 };
@@ -14,24 +20,11 @@ export default async function handler(req) {
     } else {
         p = `${p}${s}&${SEARCH}`;
     }
-    console.log(s);
-    console.log(p);
-    const r = await fetch(p, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.API_KEY}`
-        }
-    });
+    const r = await fetch(p, _utils.FETCH_OPT);
     console.log(r);
     if (!r.ok) {
-        return new Response("Bad request", {status: 404});
+        return new Response("Bad request", _utils.RES_BAD_OPT);
     }
-    return new Response(r.body, {
-        status: 200,
-        headers: {
-            "Content-Type": "application/json",
-        }
-    });
+    return new Response(r.body, _utils.RES_OPT);
 
 }
