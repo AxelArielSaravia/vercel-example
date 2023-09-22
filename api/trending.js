@@ -2,11 +2,11 @@ export const config = {
     runtime: "edge",
 };
 
-export default async function handler(req) {
-    var PATH = "/trending/all/day?language=enUs";
-    var SEARCH = "lenguage=enUs";
-    var url = new URL(req.url);
+var PATH = "/trending/all/day?language=enUs";
+var SEARCH = "lenguage=enUs";
 
+export default async function handler(req) {
+    var url = new URL(req.url);
     var p = `${process.env.API_URL}${PATH}`;
     var s = url.search;
     if (s.length === 0) {
@@ -14,6 +14,8 @@ export default async function handler(req) {
     } else {
         p = `${p}${s}&${SEARCH}`;
     }
+    console.log(s);
+    console.log(p);
     const r = await fetch(p, {
         method: 'GET',
         headers: {

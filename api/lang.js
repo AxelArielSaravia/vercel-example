@@ -2,7 +2,7 @@ export const config = {
     runtime: "edge",
 };
 
-export default function handler(req, res) {
+export default function handler(req) {
     const { language } = req.query;
     // Personalization logic based on user preferences
     let greeting;
@@ -15,5 +15,5 @@ export default function handler(req, res) {
     } else {
         greeting = "Welcome!";
     }
-    res.status(200).json({ greeting });
+    return new Response(greeting);
 }
