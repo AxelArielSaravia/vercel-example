@@ -2,7 +2,7 @@ export const config = {
     runtime: "edge",
 };
 
-var PATH = "/trending/all/day?language=enUs";
+var PATH = "/trending/all/day";
 var SEARCH = "lenguage=enUs";
 
 export default async function handler(req) {
